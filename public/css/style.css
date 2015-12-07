@@ -1,0 +1,37 @@
+body{
+Font-family: Helvetica, Arial, Sans-serif;
+Font-size:15px;
+padding:20px 0;
+Background:#e1e1e1;
+}
+.container{
+width:60%;
+max-width:300px;
+margin: 0 auto;
+background:#ffffff;
+Border: 1px solid #cccccc;
+padding:20px;
+Border-radius:4px;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+form{
+	margin:0;
+}
+form input{
+	border-radius:4px; 
+	display:block;
+	margin: 0 0 10px 0;
+	-webkit-appearance:none;
+	border: 1px solid #bbb;
+	Background:white;
+	padding:4px;
+}
+form input:last-child{margin:0;}
+form input[type=submit]:hover{
+	background:#eee;
+	cursor:pointer;
+}
+p.error{
+	color:#aa0000;
+	margin: 0 0 10px 0;
+}
