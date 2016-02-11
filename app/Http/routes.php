@@ -63,6 +63,10 @@ Route::get('/newuser', [
 	'middleware' => 'auth',
 	'uses' => 'HomeController@getNewUser'
 ]);
+Route::post('/newuser', [
+	'middleware' => 'auth',
+	'uses' => 'HomeController@postNewUser'
+]);
 Route::post('/deletephoto/{id}', [
 	'middleware' => 'auth',
 	'uses' => 'HomeController@postDeletePhoto'

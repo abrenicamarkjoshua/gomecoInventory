@@ -52,7 +52,7 @@ timedMsg();
          GOMECO Inventory Management System 
       </div>
       <div id="logout" class="pull-right clearfix">
-        <a href="auth/logout">
+        <a href="../auth/logout">
          <span class="glyphicon glyphicon-off"></span> <?php //echo remove_junk(ucfirst($user['name'])); ?> 
         </a>
       </div>
@@ -126,9 +126,9 @@ timedMsg();
     </div>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+  <script src="{{asset('js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('libs/js/functions.js')}}"></script>
   <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('js/custom.js')}}"></script>

@@ -13,9 +13,14 @@ use DB;
 use App\orders;
 use App\purchaseorder;
 use DateTime;
+use App\configStrategy;
+use App\User;
 class HomeController extends Controller{
 	public function getIndex(){
-
+		if(Auth::user()->userType != "Admin"){
+			Auth::logout();
+			return redirect(configStrategy::getGomecoWebsite());
+		}
 		
 		$purchaseordersPendingDelivery = purchaseorder::where('status', 'pending')->orWhere('status','delivery')->get();
 		$purchaseordersClosed_cancelled =purchaseorder::where('status', 'closed')->orWhere('status','cancelled')->get();
@@ -222,6 +227,26 @@ class HomeController extends Controller{
 	}
 	public function getNewUser(){
 		return view('newuser');
+	}
+
+	public function postNewUser(Request $request){
+		if($request->password != $request->retypepassword){
+			return redirect("/newuser")->with('error', 'passwords must match');
+		}
+		$user = User::create(
+			[
+			'name' => $request->username,
+			'lastname' => $request->lastname,
+			'firstname' => $request->firstname,
+			'middleName' => $request->middlename,
+			'mobileNumber' => $request->mobilenumber,
+			'userType' => "Admin",
+			'email' => $request->email,
+			'password' => bcrypt($request->password)
+
+			]
+			);
+		return redirect("/newuser")->with('affirm', 'user successfully added');
 	}
 	public function postOrder(Request $request){
 		//update here

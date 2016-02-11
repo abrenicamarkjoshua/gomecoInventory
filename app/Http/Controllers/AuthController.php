@@ -11,7 +11,6 @@ class AuthController extends Controller{
 		$rule= array(
 			'name' => 'required',
 			'password' => 'required'
-
 			);
 		$validator = \Validator::make(
 			\Input::all(), $rule
