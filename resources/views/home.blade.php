@@ -2,7 +2,7 @@
 
 @section('content')
 	<legend>Pending and on-the-way orders ({{$orders_pending_delivery->count()}})</legend>
-	 <a href = "/pending">view all pending</a>&nbsp&nbsp&nbsp<a href = "/ondelivery">view all on-the-way</a>
+	 
 	<table  class="pure-table">
 		<thead>
 			<th>Order number</th>
@@ -29,7 +29,7 @@
 @endforeach
 	</table>
 
-	<legend>Closed and cancelled orders</legend>
+	<legend style = "margin-top:30px;">Closed and cancelled orders</legend>
 	
 	<table  class="pure-table">
 		<thead>

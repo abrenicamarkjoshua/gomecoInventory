@@ -262,6 +262,7 @@ class HomeController extends Controller{
 
 		return redirect('/order/' . $request->purchaseorders_id);
 	}
+	
 	public function getOrder($id){
 		$data['orders'] = orders::where('purchaseorders_id',$id)->get();
 		$previousOrder = "";
@@ -334,6 +335,45 @@ if($purchaseorder->status == "pending" || $purchaseorder->status == "on-delivery
 		$data['purchaseordersCount'] = $purchaseordersCount;
 		$data['orderType'] = "pending";
 			$purchaseorders = purchaseorder::where('status', 'pending')->get();
+		$data['purchaseorders'] = $purchaseorders;
+		
+		return view("tablelayout", $data);
+	}
+	public function getonProcess(){
+			$previousRecord = "";
+		$data['previousRecord'] = $previousRecord;
+			$nextRecord = "";
+		$data['nextRecord'] = $nextRecord;
+			$purchaseordersCount = purchaseorder::where('status', 'on-delivery-process')->count();
+		$data['purchaseordersCount'] = $purchaseordersCount;
+		$data['orderType'] = "on-delivery-process";
+			$purchaseorders = purchaseorder::where('status', 'on-delivery-process')->get();
+		$data['purchaseorders'] = $purchaseorders;
+		
+		return view("tablelayout", $data);
+	}
+	public function getCancelled(){
+			$previousRecord = "";
+		$data['previousRecord'] = $previousRecord;
+			$nextRecord = "";
+		$data['nextRecord'] = $nextRecord;
+			$purchaseordersCount = purchaseorder::where('status', 'cancelled')->count();
+		$data['purchaseordersCount'] = $purchaseordersCount;
+		$data['orderType'] = "cancelled";
+			$purchaseorders = purchaseorder::where('status', 'cancelled')->get();
+		$data['purchaseorders'] = $purchaseorders;
+		
+		return view("tablelayout", $data);
+	}
+	public function getClosed(){
+			$previousRecord = "";
+		$data['previousRecord'] = $previousRecord;
+			$nextRecord = "";
+		$data['nextRecord'] = $nextRecord;
+			$purchaseordersCount = purchaseorder::where('status', 'closed')->count();
+		$data['purchaseordersCount'] = $purchaseordersCount;
+		$data['orderType'] = "closed";
+			$purchaseorders = purchaseorder::where('status', 'closed')->get();
 		$data['purchaseorders'] = $purchaseorders;
 		
 		return view("tablelayout", $data);

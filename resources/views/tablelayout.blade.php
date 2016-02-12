@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-	<legend>Pending orders ({{$purchaseordersCount}})</legend>
+	<legend>{{$orderType}} orders ({{$purchaseordersCount}})</legend>
 	 <a href = "/order/{{$previousRecord}}">next {{$orderType}} order</a>&nbsp&nbsp&nbsp<a href = "/order/{{$nextRecord}}">previous {{$orderType}} order</a>
 	<table  class="pure-table">
 		<thead>

@@ -84,5 +84,17 @@ Route::get('/pending', [
 	'middleware' => 'auth',
 	'uses' => 'HomeController@getPending'
 ]);
+Route::get('/onProcess', [
+	'middleware' => 'auth',
+	'uses' => 'HomeController@getonProcess'
+]);
+Route::get('/cancelled', [
+	'middleware' => 'auth',
+	'uses' => 'HomeController@getCancelled'
+]);
+Route::get('/closed', [
+	'middleware' => 'auth',
+	'uses' => 'HomeController@getClosed'
+]);
 
 ?>

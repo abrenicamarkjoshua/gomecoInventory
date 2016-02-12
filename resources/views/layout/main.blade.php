@@ -68,9 +68,9 @@ timedMsg();
              <ul class="nav submenu">
             <li><a href="/">Dashboard</a></li>
             <li><a href="/pending">Pending orders</a> </li>
-            <li><a href="/pending">On-delivery orders</a> </li>
-            <li><a href="/pending">cancelled orders</a> </li>
-            <li><a href="/pending">closed orders</a> </li>
+            <li><a href="/onProcess">On-delivery orders</a> </li>
+            <li><a href="/cancelled">cancelled orders</a> </li>
+            <li><a href="/closed">closed orders</a> </li>
       
          </ul>
           </a>
@@ -118,8 +118,6 @@ timedMsg();
 <div class="page">
   <div class="container-fluid">
 	
-
-
 @yield('content')
 		
      </div>
