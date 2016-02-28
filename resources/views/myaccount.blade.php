@@ -60,15 +60,15 @@
     	<legend>Change password</legend>
     	<div class="pure-control-group">
             <label for="name">Old password:</label>
-            <input class = "pure-input-1-3"  name = "oldpassword" type="password" />
+            <input class = "pure-input-1-3" required name = "oldpassword" type="password" />
         </div>
         <div class="pure-control-group">
             <label for="name">New password:</label>
-            <input class = "pure-input-1-3"  name = "newpassword" type="password" />
+            <input class = "pure-input-1-3" required name = "newpassword" type="password" />
         </div>
         <div class="pure-control-group">
             <label for="name">Confirm new password:</label>
-            <input class = "pure-input-1-3"  name = "confirmnewpassword" type="password" />
+            <input class = "pure-input-1-3" required name = "confirmnewpassword" type="password" />
         </div>
         <div class="pure-controls">
             

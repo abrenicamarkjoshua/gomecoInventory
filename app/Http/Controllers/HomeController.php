@@ -202,14 +202,7 @@ if(Auth::user()->userType != "Admin"){
 			$_SESSION['affirm'] = "User profile saved successfully!";
 		}
 
-		if(trim($request->oldpassword) == ''){
-			$error = "old password can't be blank";
-		}
-		elseif(trim($request->newpassword) == '')
-		{
-			$error = "new password can't be blank";
 		
-		}
 		else{
 			if(isset($_POST['changepassword'])){
 				if(Hash::check($request->oldpassword, $user->password) == false){
@@ -258,16 +251,18 @@ if(Auth::user()->userType != "Admin"){
 	public function postOrder(Request $request){
 		//update here
 		$purchaseorder = purchaseorder::find($request->purchaseorders_id);
-		if(isset($_POST['btnProcessDelivery'])){
-			$purchaseorder->status = "on-delivery-process";
-			$purchaseorder->save();
-		}
-		if(isset($_POST['btnClose'])){
-			$purchaseorder->status = "closed";
-			$purchaseorder->save();
-		}
 
-		return redirect('/order/' . $request->purchaseorders_id);
+		// if(isset($_POST['btnProcessDelivery'])){
+		// 	$purchaseorder->status = "on-delivery-process";
+		// 	$purchaseorder->save();
+		// }
+		// if(isset($_POST['btnClose'])){
+		// 	$purchaseorder->status = "closed";
+		// 	$purchaseorder->save();
+		// }
+		$purchaseorder->status = $request->newstatus;
+		$purchaseorder->save();
+		return redirect('/order/' . $request->purchaseorders_id)->with('affirm', 'Status updated successfully');
 	}
 	
 	public function getOrder($id){
@@ -282,31 +277,49 @@ if(Auth::user()->userType != "Admin"){
 		$data['purchaseOrder'] = $purchaseorder;
 		$status = "";
 		$form = "";
-		switch($data['purchaseOrder']->status){
-			case "pending":
-				$status = "<b style = 'color:orange'>pending</b>";
-				$form = "<form action = '' method = 'post'>
+		// switch($data['purchaseOrder']->status){
+		// 	case "pending":
+		// 		$status = "<b style = 'color:orange'>pending</b>";
+		// 		$form = "<form action = '' method = 'post'>
+		// 			".csrf_field()."
+		// 			<input type = 'hidden' name = 'purchaseorders_id' value = '".$id."'/>
+		// 			<input type = 'submit' name = 'btnProcessDelivery' value = 'Process delivery' />
+		// 		</form>";
+		// 	break;
+		// 	case "cancelled":
+		// 		$status = "<b style = 'color:orange'>cancelled</b>";
+		// 		$form = "";
+		// 	break;
+		// 	case "on-delivery-process":
+		// 		$status = "<b style = 'color:green'>on-delivery-process</b>";
+		// 		$form = "<form action = '' method = 'post'>
+		// 			".csrf_field()."
+		// 			<input type = 'hidden' name = 'purchaseorders_id' value = '".$id."'/>
+		// 			<input type = 'submit' name = 'btnClose' value = 'Close' />
+		// 		</form>";
+		// 	break;
+		// 	case "closed":
+		// 		$status = "<b style = 'color:green'>closed</b>";
+		// 		$form = "";
+		// 	break;
+		// }
+		$selectedpending = ($purchaseorder->status == "pending") ? "selected" : "";
+		$selectedondeliveryprocess = ($purchaseorder->status == "on-delivery-process") ? "selected" : "";
+		$selectedclosed = ($purchaseorder->status == "closed") ? "selected" : "";
+		$selectedcancelled = ($purchaseorder->status == "cancelled") ? "selected" : "";
+		if($purchaseorder->status != "cancelled" && $purchaseorder->status != "closed"){
+		$form = "<form action = '' method = 'post'>
 					".csrf_field()."
 					<input type = 'hidden' name = 'purchaseorders_id' value = '".$id."'/>
-					<input type = 'submit' name = 'btnProcessDelivery' value = 'Process delivery' />
+					<select name = 'newstatus'>
+					<option value = 'pending' $selectedpending>pending</option>
+					<option value = 'on-delivery-process' $selectedondeliveryprocess>on-delivery-process</option>
+					<option value = 'closed' $selectedclosed>closed</option>
+					<option value = 'cancelled' $selectedcancelled>cancelled</option>
+
+					</select>
+					<input type = 'submit' name = 'saveStatus' value = 'Save status' />
 				</form>";
-			break;
-			case "cancelled":
-				$status = "<b style = 'color:orange'>cancelled</b>";
-				$form = "";
-			break;
-			case "on-delivery-process":
-				$status = "<b style = 'color:green'>on-delivery-process</b>";
-				$form = "<form action = '' method = 'post'>
-					".csrf_field()."
-					<input type = 'hidden' name = 'purchaseorders_id' value = '".$id."'/>
-					<input type = 'submit' name = 'btnClose' value = 'Close' />
-				</form>";
-			break;
-			case "closed":
-				$status = "<b style = 'color:green'>closed</b>";
-				$form = "";
-			break;
 		}
 		$data['status'] = $status;
 		$data['form'] = $form;
