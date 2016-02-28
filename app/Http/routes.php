@@ -1,4 +1,8 @@
 <?php
+Route::post('/deleteuser/{id}', [
+	'as' => 'Home', 'middleware' => 'auth',
+	'uses' => 'HomeController@postDeleteUser'
+]);
 Route::get('/', [
 	'as' => 'Home', 'middleware' => 'auth',
 	'uses' => 'HomeController@getIndex'

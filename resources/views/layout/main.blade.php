@@ -117,7 +117,11 @@ timedMsg();
 
 <div class="page">
   <div class="container-fluid">
-	
+	@if(session('affirm'))
+<div class="alert alert-success">
+  {{session('affirm')}}
+</div>
+  @endif
 @yield('content')
 		
      </div>

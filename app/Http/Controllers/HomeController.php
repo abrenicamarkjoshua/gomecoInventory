@@ -16,18 +16,24 @@ use DateTime;
 use App\configStrategy;
 use App\User;
 class HomeController extends Controller{
+
+	public function postDeleteUser($id){
+		$user = User::find($id);
+		$user->forceDelete();
+		return redirect('/users')->with('affirm', 'user delete successfully');
+	}
 	public function getIndex(){
-		if(Auth::user()->userType != "Admin"){
-			Auth::logout();
-			return redirect(configStrategy::getGomecoWebsite());
-		}
 		
 		$purchaseordersPendingDelivery = purchaseorder::where('status', 'pending')->orWhere('status','delivery')->get();
 		$purchaseordersClosed_cancelled =purchaseorder::where('status', 'closed')->orWhere('status','cancelled')->get();
 
 		$data['orders_pending_delivery'] = $purchaseordersPendingDelivery;
 		$data['orders_closed_cancelled'] = $purchaseordersClosed_cancelled;
-
+if(Auth::user()->userType != "Admin"){
+			Auth::logout();
+			return redirect(configStrategy::getGomecoWebsite());
+		}
+		
 		return view('home', $data);
 	}
 	public function getOnDelivery(){
@@ -170,7 +176,8 @@ class HomeController extends Controller{
 		return view('reports', $data);
 	}
 	public function getUsers(){
-		return view('users');
+		$data['users'] = User::where('userType', 'Admin')->get();
+		return view('users', $data);
 	}
 	public function getMyAccount(){
 		
