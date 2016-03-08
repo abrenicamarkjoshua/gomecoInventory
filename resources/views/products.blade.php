@@ -42,11 +42,11 @@
         </div>
 		<div class="pure-control-group">
             <label for="name">Selling price: ₱</label>
-            <input class = "pure-input-1-3" id="productname" name = "sellingprice" type="text" placeholder="selling price" value = '{{$product->sellingprice}}'>
+            <input class = "pure-input-1-3" id="productname" name = "sellingprice" type="number" min = "1" placeholder="selling price" value = '{{$product->sellingprice}}'>
         </div>
         <div class="pure-control-group">
             <label for="name">Number of stocks: ₱</label>
-            <input class = "pure-input-1-3" name = "numberOfStocks" type="text" placeholder="quantity" value = '{{$inventory->quantity}}'>
+            <input class = "pure-input-1-3" name = "numberOfStocks" type="number" placeholder="quantity" min = "1" value = '{{$inventory->quantity}}'>
         </div>
         <div class="pure-control-group">
             <label for="name">Category</label>
