@@ -1,7 +1,13 @@
 <?php
+Route::post('/deleteClosedAndCancelledOrders',
+	'uses' => 'HomeController@postDeleteClosedAndCancelledOrders',
+	'middleware' => 'auth'
+
+	]);
 Route::post('/deleteuser/{id}', [
 	'as' => 'Home', 'middleware' => 'auth',
-	'uses' => 'HomeController@postDeleteUser'
+	'uses' => 'HomeController@postDeleteUser',
+	'middleware' => 'auth'
 ]);
 Route::get('/', [
 	'as' => 'Home', 'middleware' => 'auth',

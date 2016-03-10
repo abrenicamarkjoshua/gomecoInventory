@@ -16,7 +16,11 @@ use DateTime;
 use App\configStrategy;
 use App\User;
 class HomeController extends Controller{
+	public function postDeleteClosedAndCancelledOrders(){
+		$orders = purchaseorder::where('status', 'cancelled')->orWhere('status', 'closed')->delete();
 
+		return redirect('/')->with('affirm', 'Closed and cancelled orders successfully deleted');
+	}
 	public function postDeleteUser($id){
 		$user = User::find($id);
 		$user->forceDelete();
@@ -86,22 +90,25 @@ if(Auth::user()->userType != "Admin"){
 		'first' => $first,
 		'last' => $last
 		];
-		if(isset($_POST['btnDelete'])){
-			$varproductid = $product->id;
-			$product->delete();
-			return redirect('/products/')->with('affirm', 'product with product id: ' . $varproductid . ' successfully deleted');
-		}
+		
 		return view('products',$data);
 	}
 	
 	//save or update or search
 	public function postProducts(Request $request){
 		//post functions
+		$product = products::find($request->product_id);
+		if(isset($_POST['btnDelete'])){
+			$varproductid = $product->id;
+			$product->delete();
+			return redirect('/products/')->with('affirm', 'product with product id: ' . $varproductid . ' successfully deleted');
+		}
+
 		if(isset($_POST['search'])){
 
 		}
 		if(isset($_POST['save'])){
-			$product = products::find($request->product_id);
+			
 			$inventory = inventory::where('product_id', $request->product_id)->get()->first();
 			$inventory->quantity = $request->numberOfStocks;
 			
@@ -136,7 +143,7 @@ if(Auth::user()->userType != "Admin"){
 			$product->picture = productPictures::where('id',$request->productpicture_id)->get()->first()->picture;
 			$product->save();
 		}
-		return redirect('products/'.$request->product_id);
+		return redirect('products/'.$request->product_id)->with('affirm', 'saving successful');
 	}
 	public function postDeletePhoto($id){
 		$photo = productPictures::find($id);

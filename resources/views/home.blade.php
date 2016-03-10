@@ -30,7 +30,11 @@
 	</table>
 
 	<legend style = "margin-top:30px;">Closed and cancelled orders</legend>
-	
+	<form action = '/deleteClosedAndCancelledOrders' method = 'post'>
+		{!! csrf_field() !!}
+		<input type = 'submit' name = 'btnDelete' value = 'Cleare closed and cancelled orders' onclick="return confirm('Are you sure you want to delete all these records?');"/>
+	}
+	</form>
 	<table  class="pure-table">
 		<thead>
 			<th>Order number</th>

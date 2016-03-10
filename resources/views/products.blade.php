@@ -36,7 +36,7 @@
         </div>
         <div class="pure-control-group">
             <label for="name">Product name:</label>
-            <input class = "pure-input-1-3" id="productname" name = "productName" type="text" placeholder="product name" value = '{{$product->productName}}'>
+            <input required class = "pure-input-1-3" id="productname" name = "productName" type="text" placeholder="product name" value = '{{$product->productName}}'>
         </div>
 
         <div class="pure-control-group">
@@ -45,7 +45,7 @@
         </div>
 		<div class="pure-control-group">
             <label for="name">Selling price: ₱</label>
-            <input class = "pure-input-1-3" id="productname" name = "sellingprice" type="number" min = "1" placeholder="selling price" value = '{{$product->sellingprice}}'>
+            <input required class = "pure-input-1-3" id="productname" name = "sellingprice" type="number" min = "1" step="any" placeholder="selling price" value = '{{$product->sellingprice}}'>
         </div>
         <div class="pure-control-group">
             <label for="name">Number of stocks: ₱</label>

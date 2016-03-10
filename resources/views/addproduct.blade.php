@@ -22,7 +22,7 @@
         </div>
         <div class="pure-control-group">
             <label for="name">Number of stocks: ₱</label>
-            <input required class = "pure-input-1-3" name = "numberOfStocks" type="number"  min = "1" step="any" placeholder="quantity" value = '{{$inventory->quantity}}'>
+            <input required class = "pure-input-1-3" name = "numberOfStocks" type="number"  min = "1"  placeholder="quantity" value = '{{$inventory->quantity}}'>
         </div>
         <div class="pure-control-group">
             <label for="name">Category</label>
