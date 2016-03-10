@@ -72,14 +72,36 @@
 			<input type = 'submit' name = 'saveStatus' value = 'Update Order status' />
 		</form>
 		@else
+		<div class = "pure-form pure-form-aligned">
+		
+			<div class="pure-control-group">
+	            <label for="name">Total:</label>
+	           
+				<b>₱{{formatMoney($total, true)}}</b>
+	    	</div>
+	    	<div class="pure-control-group">
+				<div class = 'pure-control-group'>
+	    			<label>Deadline:</label>
 
+	    		 	<b style = "color:{{$deadlineColor}}">{!! $purchaseOrder->deadline !!}</b><br>
+	            </div>
+
+	            <div class = 'pure-control-group'>
+					<label>Status:</label> 
+					<b>{!! $purchaseOrder->status !!}</b>
+	            
+	        	</div>
+	        </div>
+			
+		</div>
     	@endif
 
     	
 	</fieldset>
+	@if($purchaseOrder->status != "cancelled" && $purchaseOrder->status != "closed")
 	<fieldset>
 		<legend>Customer information</legend>
-		<form action = "" method = "post" class="pure-form pure-form-aligned">
+		<div class="pure-form pure-form-aligned">
 			<input type = 'hidden' name = 'purchaseorders_id' value = '{{$purchaseOrder->id}}'/>
 				
 			<div class="pure-control-group">
@@ -114,7 +136,46 @@
 
 	        <input type = 'submit' name = 'saveCustomerDetails' value = 'Update Customer details for this order' />
 		
-	        {!! csrf_field() !!}
-	        </form>
+	        </div>
 	</fieldset>
+	@else
+<fieldset>
+		<legend>Customer information</legend>
+		<div class="pure-form pure-form-aligned">
+		
+			<input type = 'hidden' name = 'purchaseorders_id' value = '{{$purchaseOrder->id}}'/>
+				
+			<div class="pure-control-group">
+	            <label for="name">Complete name:</label>
+	            
+	            <input readonly required type = 'text'  name = 'customer_name' value = '{{$purchaseOrder->customer_name}}'/>
+	        </div> 
+	       
+	 		<div class="pure-control-group">
+	            <label for="name">Mobile number:</label>
+	            <input readonly required class = "pure-input-1-3"  name = "mobilenumber" type="number" placeholder="mobile number" value = '{{$purchaseOrder->customer_mobile}}'>
+	        </div>
+	 		<div class="pure-control-group">
+	            <label for="name">Email address:</label>
+	            <input readonly required class = "pure-input-1-3"  name = "email" type="email" placeholder="middle name" value = '{{$purchaseOrder->customer_email}}'>
+	        </div>
+	        <div class="pure-control-group">
+	            <label for="name">Complete address:</label>
+	            <textarea readonly required class = "pure-input-1-3"  name = "address">{{$purchaseOrder->customer_address}}</textarea>
+	        </div>
+
+	        <div class = "pure-control-group">
+	            <label for="userstatus">User Status:</label>
+	            <select readonly name = "customerStatus" class = "pure-input-1-3">
+	            	<option value = "unverified"{{ ($purchaseOrder->userverified == "" || $purchaseOrder->userverified == "Unverified" ) ? "selected":""}}>Unverified</option>
+	            	<option value = "Verified thru email" {{ ($purchaseOrder->userverified == "Verified thru email") ? "selected":"" }}>Verified thru email</option>
+	            	<option value = "Verified thru phone" {{($purchaseOrder->userverified == "Verified thru phone") ? "selected":""}}>Verified thru phone call</option>
+	            	
+	            </select>
+	        
+	        </div>
+	     </div>
+	</fieldset>
+	@endif
+
 @stop

@@ -27,6 +27,9 @@
     <fieldset>
     	<legend>Product information</legend>
     	<div class="pure-control-group">
+            <input type = 'submit' name = 'btnDelete' value = 'Delete' onclick="return confirm('Are you sure you want to delete this item?');"/>    
+        </div>
+        <div class="pure-control-group">
             <label for="name">Product Id:</label>
             {{($product->id) ? $product->id:""}}
             <input type = 'hidden' name = 'product_id' value = '{{$product->id}}'/>

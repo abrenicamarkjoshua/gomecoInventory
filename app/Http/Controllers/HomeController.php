@@ -86,6 +86,11 @@ if(Auth::user()->userType != "Admin"){
 		'first' => $first,
 		'last' => $last
 		];
+		if(isset($_POST['btnDelete'])){
+			$varproductid = $product->id;
+			$product->delete();
+			return redirect('/products/')->with('affirm', 'product with product id: ' . $varproductid . ' successfully deleted');
+		}
 		return view('products',$data);
 	}
 	
