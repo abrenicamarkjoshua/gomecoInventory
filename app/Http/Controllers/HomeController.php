@@ -251,6 +251,8 @@ if(Auth::user()->userType != "Admin"){
 	public function postOrder(Request $request){
 		//update here
 		$purchaseorder = purchaseorder::find($request->purchaseorders_id);
+		if(isset($_POST['saveStatus'])){
+
 
 		// if(isset($_POST['btnProcessDelivery'])){
 		// 	$purchaseorder->status = "on-delivery-process";
@@ -261,8 +263,21 @@ if(Auth::user()->userType != "Admin"){
 		// 	$purchaseorder->save();
 		// }
 		$purchaseorder->status = $request->newstatus;
+		$purchaseorder->remarks = $request->remarks;
 		$purchaseorder->save();
 		return redirect('/order/' . $request->purchaseorders_id)->with('affirm', 'Status updated successfully');
+		}
+		if(isset($_POST['saveCustomerDetails'])){
+			$purchaseorder->customer_name = $request->customer_name;
+			$purchaseorder->customer_mobile = $request->mobilenumber;
+			$purchaseorder->customer_email = $request->email;
+			$purchaseorder->customer_address = $request->address;
+			$purchaseorder->userverified = $request->customerStatus;
+			$purchaseorder->save();
+			return redirect('/order/' . $request->purchaseorders_id)->with('affirm', 'Customer details for this order updated successfully');
+
+		}
+
 	}
 	
 	public function getOrder($id){
@@ -303,26 +318,8 @@ if(Auth::user()->userType != "Admin"){
 		// 		$form = "";
 		// 	break;
 		// }
-		$selectedpending = ($purchaseorder->status == "pending") ? "selected" : "";
-		$selectedondeliveryprocess = ($purchaseorder->status == "on-delivery-process") ? "selected" : "";
-		$selectedclosed = ($purchaseorder->status == "closed") ? "selected" : "";
-		$selectedcancelled = ($purchaseorder->status == "cancelled") ? "selected" : "";
-		if($purchaseorder->status != "cancelled" && $purchaseorder->status != "closed"){
-		$form = "<form action = '' method = 'post'>
-					".csrf_field()."
-					<input type = 'hidden' name = 'purchaseorders_id' value = '".$id."'/>
-					<select name = 'newstatus'>
-					<option value = 'pending' $selectedpending>pending</option>
-					<option value = 'on-delivery-process' $selectedondeliveryprocess>on-delivery-process</option>
-					<option value = 'closed' $selectedclosed>closed</option>
-					<option value = 'cancelled' $selectedcancelled>cancelled</option>
-
-					</select>
-					<input type = 'submit' name = 'saveStatus' value = 'Save status' />
-				</form>";
-		}
+		
 		$data['status'] = $status;
-		$data['form'] = $form;
 $deadlineColor = "black";
 if($purchaseorder->status == "pending" || $purchaseorder->status == "on-delivery-process"){
 

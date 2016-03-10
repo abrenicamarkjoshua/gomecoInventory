@@ -9,11 +9,15 @@
 	
     <fieldset>
     	@if($error != "")
-        <p style = "color:red;">{{$error}}</p>
+        <p style = "color:red;">{!! $error !!}</p>
         @endif
         @if(isset($_SESSION['affirm']))
-        <p style ="color:green">{{$_SESSION['affirm']}}</p>
+        <p style ="color:green">{!! $_SESSION['affirm'] !!}</p>
             <?php unset($_SESSION['affirm']); ?>
+        @endif
+        @if(Auth::user()->active == 0)
+            <p style = "color:red;">Please check your email and  validate your account within 24 hours. Order made by invalid users are marked as false orders</p>
+        
         @endif
         <legend>Personal information</legend>
     	
