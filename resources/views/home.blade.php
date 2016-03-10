@@ -29,11 +29,11 @@
 @endforeach
 	</table>
 
-	<legend style = "margin-top:30px;">Closed and cancelled orders</legend>
-	<form action = '/deleteClosedAndCancelledOrders' method = 'post'>
+	<legend style = "margin-top:30px;">Closed and cancelled orders ({{$orders_closed_cancelled->count()}})</legend>
+	<form action = '/deleteClosedAndCancelledOrders' method = 'post' style = "margin-bottom:20px;">
 		{!! csrf_field() !!}
-		<input type = 'submit' name = 'btnDelete' value = 'Cleare closed and cancelled orders' onclick="return confirm('Are you sure you want to delete all these records?');"/>
-	}
+		<input type = 'submit' name = 'btnDelete' value = 'Clear closed and cancelled orders' onclick="return confirm('Are you sure you want to delete all these records?');"/>
+	
 	</form>
 	<table  class="pure-table">
 		<thead>

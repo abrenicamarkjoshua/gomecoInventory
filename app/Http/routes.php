@@ -1,5 +1,5 @@
 <?php
-Route::post('/deleteClosedAndCancelledOrders',
+Route::post('/deleteClosedAndCancelledOrders', [
 	'uses' => 'HomeController@postDeleteClosedAndCancelledOrders',
 	'middleware' => 'auth'
 
