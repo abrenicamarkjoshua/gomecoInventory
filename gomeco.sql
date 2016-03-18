@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.0.10.7
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 11, 2016 at 12:32 PM
--- Server version: 10.1.8-MariaDB
--- PHP Version: 5.6.14
+-- Host: localhost
+-- Generation Time: Mar 18, 2016 at 03:48 AM
+-- Server version: 5.5.45-cll-lve
+-- PHP Version: 5.4.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `gomeco`
@@ -23,15 +23,38 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `audittrail`
+--
+
+CREATE TABLE IF NOT EXISTS `audittrail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `purchaseorder_id` int(11) NOT NULL,
+  `trail` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `audittrail`
+--
+
+INSERT INTO `audittrail` (`id`, `purchaseorder_id`, `trail`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Admin updated order status to : on-delivery-process', '2016-03-18 09:01:20', '2016-03-18 09:01:20');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `category` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `categories`
@@ -48,13 +71,14 @@ INSERT INTO `categories` (`id`, `category`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `inventory`
 --
 
-CREATE TABLE `inventory` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `inventory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
 --
 -- Dumping data for table `inventory`
@@ -70,7 +94,36 @@ INSERT INTO `inventory` (`id`, `product_id`, `quantity`, `created_at`, `updated_
 (7, 5, 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (8, 6, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (9, 7, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(10, 13, 35, '2015-11-15 06:54:12', '2015-11-15 06:54:12');
+(10, 13, 35, '2015-11-15 06:54:12', '2015-11-15 06:54:12'),
+(11, 14, 0, '2016-03-10 06:30:44', '2016-03-10 06:30:44'),
+(12, 15, 1, '2016-03-10 06:31:28', '2016-03-10 06:31:28'),
+(13, 16, 0, '2016-03-10 06:36:31', '2016-03-10 06:36:31'),
+(14, 17, 3, '2016-03-10 06:37:49', '2016-03-10 06:40:25'),
+(15, 18, 1, '2016-03-10 07:12:31', '2016-03-10 07:12:31'),
+(16, 19, 1, '2016-03-10 07:13:23', '2016-03-10 07:13:23'),
+(17, 20, 1, '2016-03-10 07:14:15', '2016-03-10 07:14:15'),
+(18, 21, 1, '2016-03-10 07:15:28', '2016-03-10 07:15:28'),
+(19, 22, 1, '2016-03-10 07:16:24', '2016-03-10 07:16:24'),
+(20, 23, 1, '2016-03-10 07:17:15', '2016-03-10 07:17:15'),
+(21, 24, 1, '2016-03-10 07:18:27', '2016-03-10 07:18:27'),
+(22, 25, 1, '2016-03-10 07:19:29', '2016-03-10 07:19:29'),
+(23, 26, 1, '2016-03-10 07:20:10', '2016-03-10 07:20:10'),
+(24, 27, 1, '2016-03-10 07:21:08', '2016-03-10 07:21:08'),
+(25, 28, 1, '2016-03-10 07:22:01', '2016-03-10 07:22:01'),
+(26, 29, 1, '2016-03-10 07:24:05', '2016-03-10 07:24:05'),
+(27, 30, 1, '2016-03-10 07:25:00', '2016-03-10 07:25:00'),
+(28, 31, 1, '2016-03-10 07:26:12', '2016-03-10 07:26:12'),
+(29, 32, 1, '2016-03-10 07:26:56', '2016-03-10 07:26:56'),
+(30, 33, 1, '2016-03-10 07:27:37', '2016-03-10 07:27:37'),
+(31, 34, 1, '2016-03-10 07:29:19', '2016-03-10 07:29:19'),
+(32, 35, 1, '2016-03-10 07:30:33', '2016-03-10 07:30:33'),
+(33, 36, 1, '2016-03-10 07:31:30', '2016-03-10 07:31:30'),
+(34, 37, 1, '2016-03-10 07:32:18', '2016-03-10 07:32:18'),
+(35, 38, 1, '2016-03-10 07:33:32', '2016-03-10 07:33:32'),
+(36, 39, 1, '2016-03-10 07:35:31', '2016-03-10 07:35:31'),
+(37, 40, 1, '2016-03-10 07:36:28', '2016-03-10 07:36:28'),
+(38, 41, 1, '2016-03-10 07:40:48', '2016-03-10 07:40:48'),
+(39, 42, 12500, '2016-03-18 01:26:08', '2016-03-18 01:26:08');
 
 -- --------------------------------------------------------
 
@@ -78,7 +131,7 @@ INSERT INTO `inventory` (`id`, `product_id`, `quantity`, `created_at`, `updated_
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE `migrations` (
+CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -99,46 +152,25 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 -- Table structure for table `orders`
 --
 
-CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `purchaseorders_id` int(11) NOT NULL,
   `productName` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `amount` decimal(10,0) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `amount` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `purchaseorders_id` (`purchaseorders_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`id`, `purchaseorders_id`, `productName`, `quantity`, `created_at`, `updated_at`, `amount`) VALUES
-(10, 9, 'hoffman caserole', 1, '2015-11-13 23:36:56', '2015-11-13 23:36:56', '1500'),
-(11, 9, 'test2', 1, '2015-11-13 23:36:56', '2015-11-13 23:36:56', '200'),
-(12, 10, 'hoffman caserole', 1, '2015-11-13 23:47:23', '2015-11-13 23:47:23', '1500'),
-(13, 10, 'Electric bread stove', 1, '2015-11-13 23:47:23', '2015-11-13 23:47:23', '7832'),
-(14, 11, 'Pressure cooker', 1, '2015-11-14 03:31:09', '2015-11-14 03:31:09', '1300'),
-(15, 11, 'hoffman caserole', 1, '2015-11-14 03:31:09', '2015-11-14 03:31:09', '1500'),
-(16, 13, 'Pressure cooker', 1, '2015-11-14 04:51:41', '2015-11-14 04:51:41', '1300'),
-(17, 13, 'Electric bread stove', 1, '2015-11-14 04:51:41', '2015-11-14 04:51:41', '7832'),
-(18, 13, 'White Refridgerator', 1, '2015-11-14 04:51:41', '2015-11-14 04:51:41', '7832'),
-(19, 14, 'Pressure cooker', 1, '2015-11-14 04:56:00', '2015-11-14 04:56:00', '1300'),
-(20, 15, 'Electric bread stove', 1, '2015-11-14 05:58:21', '2015-11-14 05:58:21', '7832'),
-(21, 16, 'Electric bread stove', 1, '2015-11-14 06:06:57', '2015-11-14 06:06:57', '7832'),
-(22, 16, 'hoffman caserole', 1, '2015-11-14 06:06:57', '2015-11-14 06:06:57', '1500'),
-(23, 17, 'hoffman caserole', 1, '2015-11-14 06:13:17', '2015-11-14 06:13:17', '1500'),
-(24, 18, 'Electric bread stove', 1, '2015-11-15 06:42:54', '2015-11-15 06:42:54', '7832'),
-(25, 18, 'Dark grey stainless steel kitchen desk', 1, '2015-11-15 06:42:54', '2015-11-15 06:42:54', '7832'),
-(26, 18, '6-ingridient holder stainless steel drawer', 1, '2015-11-15 06:42:54', '2015-11-15 06:42:54', '7832'),
-(27, 18, 'Pressure cooker', 1, '2015-11-15 06:42:54', '2015-11-15 06:42:54', '1300'),
-(28, 19, 'Pressure cooker', 1, '2015-11-15 07:08:15', '2015-11-15 07:08:15', '1300'),
-(29, 19, 'test name', 1, '2015-11-15 07:08:15', '2015-11-15 07:08:15', '1000'),
-(30, 20, 'Electric bread stove', 1, '2015-11-15 07:15:23', '2015-11-15 07:15:23', '7832'),
-(31, 20, 'hoffman caserole', 1, '2015-11-15 07:15:23', '2015-11-15 07:15:23', '1500'),
-(32, 21, 'hoffman caserole', 1, '2016-02-11 09:22:46', '2016-02-11 09:22:46', '1500'),
-(33, 22, 'hoffman caserole', 1, '2016-02-11 09:26:00', '2016-02-11 09:26:00', '1500'),
-(34, 24, 'hoffman caserole', 1, '2016-02-11 11:01:11', '2016-02-11 11:01:11', '1500');
+(1, 1, 'SS Wall Shelf', 1, '2016-03-18 08:42:57', '2016-03-18 08:42:57', '1.00'),
+(2, 1, 'Dishwashing Sinktable (Tubular Bracing w partial bottomshelf)', 1, '2016-03-18 08:42:57', '2016-03-18 08:42:57', '1.00');
 
 -- --------------------------------------------------------
 
@@ -146,10 +178,12 @@ INSERT INTO `orders` (`id`, `purchaseorders_id`, `productName`, `quantity`, `cre
 -- Table structure for table `password_resets`
 --
 
-CREATE TABLE `password_resets` (
+CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  KEY `password_resets_email_index` (`email`),
+  KEY `password_resets_token_index` (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -158,31 +192,45 @@ CREATE TABLE `password_resets` (
 -- Table structure for table `productpictures`
 --
 
-CREATE TABLE `productpictures` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `productpictures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `picture` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
 -- Dumping data for table `productpictures`
 --
 
 INSERT INTO `productpictures` (`id`, `product_id`, `picture`, `created_at`, `updated_at`) VALUES
-(1, 5, 'images/a-img.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 5, 'images/a-img1.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 5, 'images/a-img2.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(11, 8, 'images/standard-spc-4qc-4-quarts-pressure-cooker-silver-9351-742163-1-product.jpg', '2015-11-03 02:17:12', '2015-11-03 02:17:12'),
-(16, 12, 'images/hoffman1.jpg', '2015-11-07 01:14:28', '2015-11-07 01:14:28'),
-(17, 12, 'images/hoffman2.jpg', '2015-11-07 01:14:28', '2015-11-07 01:14:28'),
-(18, 12, 'images/hoffman3.jpg', '2015-11-07 01:14:28', '2015-11-07 01:14:28'),
-(19, 6, 'images/a-img2.jpg', '2015-11-11 09:35:11', '2015-11-11 09:35:11'),
-(20, 7, 'images/a-img1.jpg', '2015-11-11 09:35:31', '2015-11-11 09:35:31'),
-(21, 13, 'images/handshake-logo-766477.gif', '2015-11-15 06:55:21', '2015-11-15 06:55:21'),
-(22, 13, 'images/msmouse.jpg', '2015-11-15 06:55:21', '2015-11-15 06:55:21'),
-(23, 13, 'images/mar roxas.jpg', '2015-11-15 06:56:32', '2015-11-15 06:56:32');
+(26, 18, 'images/Beverage Counter (Apron Panel).jpg', '2016-03-10 07:12:56', '2016-03-10 07:12:56'),
+(27, 19, 'images/Beverage Counter (Front Panel).jpg', '2016-03-10 07:13:47', '2016-03-10 07:13:47'),
+(28, 20, 'images/Dimsum Steamer (Double Bowl).jpg', '2016-03-10 07:14:34', '2016-03-10 07:14:34'),
+(29, 21, 'images/Dimsum Steamer (Single Bowl).jpg', '2016-03-10 07:15:56', '2016-03-10 07:15:56'),
+(30, 22, 'images/Grease Trap (5, 10 , 15 GPM).jpg', '2016-03-10 07:16:43', '2016-03-10 07:16:43'),
+(31, 23, 'images/Silver Caddy (4 Holes).jpg', '2016-03-10 07:17:37', '2016-03-10 07:17:37'),
+(32, 24, 'images/Silver Caddy (6 Holes).jpg', '2016-03-10 07:18:50', '2016-03-10 07:18:50'),
+(33, 25, 'images/Siopao Display Warmer.jpg', '2016-03-10 07:19:42', '2016-03-10 07:19:42'),
+(34, 26, 'images/Steamer Box.jpg', '2016-03-10 07:20:35', '2016-03-10 07:20:35'),
+(35, 27, 'images/2 Open Top Range Counter Top Model.jpg', '2016-03-10 07:21:31', '2016-03-10 07:21:31'),
+(36, 28, 'images/4 Open Top Range Counter Top Model.jpg', '2016-03-10 07:23:32', '2016-03-10 07:23:32'),
+(37, 29, 'images/4 Open Top Range with Oven.jpg', '2016-03-10 07:24:26', '2016-03-10 07:24:26'),
+(38, 30, 'images/6 Open Top Range Counter Top Model.jpg', '2016-03-10 07:25:19', '2016-03-10 07:25:19'),
+(39, 31, 'images/6 Open Top Range with Oven and Open Cabinet.jpg', '2016-03-10 07:26:27', '2016-03-10 07:26:27'),
+(40, 32, 'images/6 Open Top Range with Stand.jpg', '2016-03-10 07:27:13', '2016-03-10 07:27:13'),
+(41, 33, 'images/Asian Wok_1 Burner.jpg', '2016-03-10 07:27:55', '2016-03-10 07:27:55'),
+(42, 34, 'images/Asian Wok_2 Burner.jpg', '2016-03-10 07:29:40', '2016-03-10 07:29:40'),
+(43, 35, 'images/Asian Wok_3 Burner.jpg', '2016-03-10 07:30:50', '2016-03-10 07:30:50'),
+(44, 36, 'images/Clean Dish Table.jpg', '2016-03-10 07:31:48', '2016-03-10 07:31:48'),
+(45, 37, 'images/Dishwashing Sinktable (Tubular Bracing w partial bottomshelf).jpg', '2016-03-10 07:32:34', '2016-03-10 07:32:34'),
+(46, 38, 'images/Dishwashing Sinktable (Tubular Bracing).jpg', '2016-03-10 07:34:39', '2016-03-10 07:34:39'),
+(47, 39, 'images/Sinktable (Island Type).jpg', '2016-03-10 07:35:46', '2016-03-10 07:35:46'),
+(48, 40, 'images/Sinktable.jpg', '2016-03-10 07:36:44', '2016-03-10 07:36:44'),
+(49, 41, 'images/SS Wall Shelf.jpg', '2016-03-10 07:41:00', '2016-03-10 07:41:00');
 
 -- --------------------------------------------------------
 
@@ -190,32 +238,48 @@ INSERT INTO `productpictures` (`id`, `product_id`, `picture`, `created_at`, `upd
 -- Table structure for table `products`
 --
 
-CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `productName` varchar(255) NOT NULL,
   `productDesc` text NOT NULL,
-  `sellingprice` decimal(10,0) NOT NULL,
+  `sellingprice` decimal(10,2) NOT NULL,
   `category_id` int(11) NOT NULL,
   `picture` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `productName`, `productDesc`, `sellingprice`, `category_id`, `picture`, `created_at`, `updated_at`) VALUES
-(1, 'Dark grey stainless steel kitchen desk', 'Dimension: 8x8\r\nWeight: 12kg\r\nWarranty: 1 year\r\n', '7832', 3, 'product/01.jpg', '2015-10-24 04:35:39', '0000-00-00 00:00:00'),
-(2, 'White stainless steel kitchen desk', 'Dimension: 8x8\r\nWeight: 12kg\r\nWarranty: 1 year\r\n', '7832', 3, 'product/02.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, '6-ingridient holder stainless steel drawer', 'Dimension: 8x8\r\nWeight: 12kg\r\nWarranty: 1 year\r\n', '7832', 1, 'product/03.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 'White Refridgerator', 'Dimension: 8x8\r\nWeight: 12kg\r\nWarranty: 1 year\r\n', '7832', 3, 'product/04.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 'Electric bread stove', 'Dimension: 8x8\r\nWeight: 12kg\r\nWarranty: 1 year\r\n', '7832', 2, 'images/a-img.jpg', '2015-11-08 23:40:42', '2015-11-08 15:40:42'),
-(6, 'test name', 'test desc', '1000', 0, 'images/a-img2.jpg', '2015-11-11 01:35:17', '2015-11-10 17:35:17'),
-(7, 'test2', 'test desc2', '200', 0, 'images/a-img1.jpg', '2015-11-11 01:35:37', '2015-11-10 17:35:37'),
-(8, 'Pressure cooker', 'Size: large\r\nColor: silver, black\r\n', '1300', 1, 'images/lifetime-brands-vasconia-8qt-pressure-cooker_94987.jpg', '2015-11-02 23:15:39', '2015-11-02 15:15:39'),
-(12, 'hoffman caserole', 'Diameter: 21cm\r\nDepth: 11.5cm\r\n-Induction-Friendly\r\n-Fast heating\r\n-High-grade & quality stainless steel\r\n-Multi layered of 18/10 stainless steel for durability and aluminum alloy for quick and even heat transfer.\r\n-Beneath the pot or pan is the heat absorbent and heat transmission design.\r\n-Rounded edges prevent spillage while pouring water or soup.', '1500', 3, 'images/hoffman1.jpg', '2015-11-06 17:24:15', '2015-11-06 09:24:15'),
-(13, 'shades', 'Rayban\r\n3x3\r\nbrown\r\npolycarbonated soda', '1000', 3, 'images/handshake-logo-766477.gif', '2015-11-14 22:57:00', '2015-11-14 14:57:00');
+(18, 'Beverage Counter (Apron Panel)', 'Beverage Counter (Apron Panel)', '1.00', 1, 'images/Beverage Counter (Apron Panel).jpg', '2016-03-10 07:13:02', '2016-03-10 14:13:02'),
+(19, 'Beverage Counter (Front Panel)', 'Beverage Counter (Front Panel)', '1.00', 1, 'images/Beverage Counter (Front Panel).jpg', '2016-03-10 07:13:54', '2016-03-10 14:13:54'),
+(20, 'Dimsum Steamer (Double Bowl)', 'Dimsum Steamer (Double Bowl)', '1.00', 1, 'images/Dimsum Steamer (Double Bowl).jpg', '2016-03-10 07:15:01', '2016-03-10 14:15:01'),
+(21, 'Dimsum Steamer (Single Bowl)', 'Dimsum Steamer (Single Bowl)', '1.00', 1, 'images/Dimsum Steamer (Single Bowl).jpg', '2016-03-10 07:16:00', '2016-03-10 14:16:00'),
+(22, 'Grease Trap (5, 10 , 15 GPM)', 'Grease Trap (5, 10 , 15 GPM)', '1.00', 1, 'images/Grease Trap (5, 10 , 15 GPM).jpg', '2016-03-10 07:16:55', '2016-03-10 14:16:55'),
+(23, 'Silver Caddy (4 Holes)', 'Silver Caddy (4 Holes)', '1.00', 1, 'images/Silver Caddy (4 Holes).jpg', '2016-03-10 07:18:04', '2016-03-10 14:18:04'),
+(24, 'Silver Caddy (6 Holes)', 'Silver Caddy (6 Holes)', '1.00', 1, 'images/Silver Caddy (6 Holes).jpg', '2016-03-10 07:18:56', '2016-03-10 14:18:56'),
+(25, 'Siopao Display Warmer', 'Siopao Display Warmer', '1.00', 1, 'images/Siopao Display Warmer.jpg', '2016-03-10 07:19:49', '2016-03-10 14:19:49'),
+(26, 'Steamer Box', 'Steamer Box', '1.00', 1, 'images/Steamer Box.jpg', '2016-03-10 07:20:42', '2016-03-10 14:20:42'),
+(27, '2 Open Top Range Counter Top Model', '2 Open Top Range Counter Top Model', '1.00', 2, 'images/2 Open Top Range Counter Top Model.jpg', '2016-03-10 07:21:39', '2016-03-10 14:21:39'),
+(28, '4 Open Top Range Counter Top Model', '4 Open Top Range Counter Top Model', '1.00', 2, 'images/4 Open Top Range Counter Top Model.jpg', '2016-03-10 07:23:46', '2016-03-10 14:23:46'),
+(29, '4 Open Top Range with Oven', '4 Open Top Range with Oven', '1.00', 2, 'images/4 Open Top Range with Oven.jpg', '2016-03-10 07:25:40', '2016-03-10 14:25:40'),
+(30, '6 Open Top Range Counter Top Model', '6 Open Top Range Counter Top Model', '1.00', 2, 'images/6 Open Top Range Counter Top Model.jpg', '2016-03-10 07:25:24', '2016-03-10 14:25:24'),
+(31, '6 Open Top Range with Oven and Open Cabinet', '6 Open Top Range with Oven and Open Cabinet', '1.00', 2, 'images/6 Open Top Range with Oven and Open Cabinet.jpg', '2016-03-10 07:26:34', '2016-03-10 14:26:34'),
+(32, '6 Open Top Range with Stand', '6 Open Top Range with Stand', '1.00', 2, 'images/6 Open Top Range with Stand.jpg', '2016-03-10 07:27:21', '2016-03-10 14:27:21'),
+(33, 'Asian Wok_1 Burner', 'Asian Wok_1 Burner', '1.00', 2, 'images/Asian Wok_1 Burner.jpg', '2016-03-10 07:28:00', '2016-03-10 14:28:00'),
+(34, 'Asian Wok_2 Burner', 'Asian Wok_2 Burner', '1.00', 2, 'images/Asian Wok_2 Burner.jpg', '2016-03-10 07:30:07', '2016-03-10 14:30:07'),
+(35, 'Asian Wok_3 Burner', 'Asian Wok_3 Burner', '1.00', 2, 'images/Asian Wok_3 Burner.jpg', '2016-03-10 07:30:57', '2016-03-10 14:30:57'),
+(36, 'Clean Dish Table', 'Clean Dish Table', '1.00', 3, 'images/Clean Dish Table.jpg', '2016-03-10 07:31:54', '2016-03-10 14:31:54'),
+(37, 'Dishwashing Sinktable (Tubular Bracing w partial bottomshelf)', 'Dishwashing Sinktable (Tubular Bracing w partial bottomshelf)', '1.00', 3, 'images/Dishwashing Sinktable (Tubular Bracing w partial bottomshelf).jpg', '2016-03-10 07:32:43', '2016-03-10 14:32:43'),
+(38, 'Dishwashing Sinktable (Tubular Bracing)', 'Dishwashing Sinktable (Tubular Bracing)', '1.00', 3, 'images/Dishwashing Sinktable (Tubular Bracing).jpg', '2016-03-10 07:34:45', '2016-03-10 14:34:45'),
+(39, 'Sinktable (Island Type)', 'Sinktable (Island Type)', '1.00', 3, 'images/Sinktable (Island Type).jpg', '2016-03-10 07:35:54', '2016-03-10 14:35:54'),
+(40, 'Sinktable', 'Sinktable', '1.00', 3, 'images/Sinktable.jpg', '2016-03-10 07:36:55', '2016-03-10 14:36:55'),
+(41, 'SS Wall Shelf', 'SS Wall Shelf', '1.00', 3, 'images/SS Wall Shelf.jpg', '2016-03-10 07:41:26', '2016-03-10 14:41:26'),
+(42, 'asd', 'we', '100.00', 1, '', '2016-03-18 08:26:08', '2016-03-18 08:26:08');
 
 -- --------------------------------------------------------
 
@@ -223,8 +287,8 @@ INSERT INTO `products` (`id`, `productName`, `productDesc`, `sellingprice`, `cat
 -- Table structure for table `purchaseorders`
 --
 
-CREATE TABLE `purchaseorders` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `purchaseorders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `status` varchar(255) NOT NULL,
@@ -233,24 +297,19 @@ CREATE TABLE `purchaseorders` (
   `customer_mobile` varchar(255) NOT NULL,
   `customer_email` varchar(255) NOT NULL,
   `deadline` date NOT NULL,
-  `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `user_id` int(11) DEFAULT NULL,
+  `remarks` varchar(255) NOT NULL,
+  `userverified` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `purchaseorders`
 --
 
-INSERT INTO `purchaseorders` (`id`, `created_at`, `updated_at`, `status`, `customer_name`, `customer_address`, `customer_mobile`, `customer_email`, `deadline`, `user_id`) VALUES
-(15, '2015-11-14 05:58:21', '2015-12-07 07:33:47', 'on-delivery-process', 'dan joel', '95 bansalangin street, veterans village', '09175824979', 'abrenicamarkjoshua@yahoo.com', '2015-11-21', 4),
-(16, '2015-11-14 06:06:57', '2015-12-07 07:38:43', 'on-delivery-process', 'dan joel', '95 bansalangin street, veterans village', '09175824979', 'abrenicamarkjoshua@yahoo.com', '2015-11-21', 4),
-(17, '2015-11-14 06:13:17', '2015-12-07 07:39:04', 'on-delivery-process', 'dan joel', '95 bansalangin street, veterans village', '09175824979', 'abrenicamarkjoshua@yahoo.com', '2015-11-21', 4),
-(18, '2015-11-15 06:42:54', '2015-11-15 06:48:41', 'closed', 'ryan', 'maysan, valenzuela city', '09279492744', 'ryan@gmail.com', '2015-11-22', 5),
-(19, '2015-11-15 07:08:15', '2015-11-15 07:08:15', 'pending', 'Jomarie Labios', 'Espiritu St. Marulas Val. City', '09051127633', 'jomarielabios22@yahoo.com', '2015-11-22', NULL),
-(20, '2015-11-15 07:15:23', '2015-11-15 07:17:34', 'closed', 'Jomarie Labios', '44 Espiritu St. Marulas Val. City', '09051127633', 'jomarielabios22@yahoo.com', '2015-11-22', 6),
-(21, '2016-02-11 09:22:45', '2016-02-11 09:22:45', 'pending', 'Mark Joshua Abrenica', 'address 101', '234', '', '2016-02-18', NULL),
-(22, '2016-02-11 09:26:00', '2016-02-11 09:26:00', 'pending', '', '', '', '', '2016-02-18', NULL),
-(23, '2016-02-11 10:52:07', '2016-02-11 10:52:07', 'pending', ' ', 'some address\r\n', '234', 'abrenicamarkjoshua@zoho.com', '2016-02-18', NULL),
-(24, '2016-02-11 11:01:11', '2016-02-11 11:02:56', 'on-delivery-process', ' ', 'some address\r\n', '234', 'abrenicamarkjoshua@zoho.com', '2016-02-18', 8);
+INSERT INTO `purchaseorders` (`id`, `created_at`, `updated_at`, `status`, `customer_name`, `customer_address`, `customer_mobile`, `customer_email`, `deadline`, `user_id`, `remarks`, `userverified`) VALUES
+(1, '2016-03-18 08:42:57', '2016-03-18 09:01:20', 'on-delivery-process', 'joshua', 'sm the grass residences unit 1717b tower 1, quezon city, philippines', '09175829479', 'abrenicamarkjoshua@gmail.com', '2016-03-25', 31, '', 'Verified thru email');
 
 -- --------------------------------------------------------
 
@@ -258,8 +317,8 @@ INSERT INTO `purchaseorders` (`id`, `created_at`, `updated_at`, `status`, `custo
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_address` text COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -271,20 +330,22 @@ CREATE TABLE `users` (
   `password` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `customer_address`, `name`, `lastname`, `firstname`, `middleName`, `mobileNumber`, `userType`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, '', 'gomeco', 'Abrenica', 'Mark Joshua', '', '09175824979', 'Admin', 'abrenicamarkjoshua@gmail.com', '$2y$10$wdG1d8mGHPXejoY6K8HZkeadXPFDAYFJbp.kwtAgILueehfNWyMvS', 'F4l1LvJUIyHv1STAxG84h5einMxlKKsQFfJaHfYXIdjI9nkrz9x4MJjPgyBR', '0000-00-00 00:00:00', '2016-02-11 03:07:31'),
-(4, '95 bansalangin street, veterans village', 'dan joel', '', '', '', '09175824979', '', 'abrenicamarkjoshua@yahoo.com', '$2y$10$wdG1d8mGHPXejoY6K8HZkeadXPFDAYFJbp.kwtAgILueehfNWyMvS', '04DaYRmaZ3LUWTHIg40WuXvGxOIc4Q4oR4ZQmCYsj5yWUrQfcR4b2ctFVts9', '2015-11-13 13:32:35', '2015-12-06 23:39:58'),
-(5, 'maysan, valenzuela city', 'ryan', '', '', '', '09279492744', '', 'ryan@gmail.com', '$2y$10$IwzS9mvZk0L7mYDXi4MkW.Q7ac9vZvRtIPMkVSxMNSmlwR0fSXkq.', '4F02ZxkMZnbSteAx5MQPIjJLAhqSUVlhMjbEwDlYdBSLcv3NZko3rKXzEIkC', '2015-11-14 14:39:40', '2015-11-14 15:03:23'),
-(6, '44 Espiritu St. Marulas Val. City', 'Jomarie Labios', '', '', '', '09051127633', '', 'jomarielabios22@yahoo.com', '$2y$10$ekJlVgCoFF5MM0PpjsvSaO8YNsaVxvuOCemi6C359nKNpYLd92jLG', 'MeR75LEyx6U27huudnyMxP5c43QxWW6ZZnD0l2qLVcduFnft9fGbFuLnI6eS', '2015-11-14 15:10:44', '2015-11-14 15:11:58'),
-(7, '', 'ojit', 'abrenica', 'john joseph', 'rivera', '09175824979', 'Admin', 'abrenicajohnjoseph@yahoo.com', '$2y$10$xlr4rQm9Z.XyDceR6rNps.NC6ggHD5YYXl8Dc4pghlfHCSZhsJSOW', 'm7I1mVDvEX5PNadwl8HBQqxKxYO4fWVIRE3X0QFUIS8pLQSNZdMiLF3LvfDY', '2015-12-07 00:07:27', '2015-12-07 00:07:58'),
-(8, 'some address\r\n', 'joshua', 'Abrenica', 'Mark Joshua', 'Rivera', '234', '', 'abrenicamarkjoshua@zoho.com', '$2y$10$JVX2B/L0fx47yGJbLoG83unA300ytmQ0aanOv0UWizg5GH6HrtbI6', 'vtlFypGaCoUyk9obHmfUaCBMwvS67QS1CrB8peuGnFfpLDcW9yQlwf3CiC7y', '2016-02-11 01:24:58', '2016-02-11 03:14:46');
+INSERT INTO `users` (`id`, `customer_address`, `name`, `lastname`, `firstname`, `middleName`, `mobileNumber`, `userType`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `token`, `active`) VALUES
+(2, '', 'gomeco', 'abrenica', 'Mark Joshua', 'rivera', '09175824979', 'Admin', 'abrenicamarkjoshua@gmail2.com', '$2y$10$GBioDbxd73E9ONSELN7D8uKgehnNgJKvJzS7VtekEM3NsckbIhgpy', 'Qi9QJpeLDwlIaqNV2cueXcvxVClI5SKfEbyhetKgd1xGbpSmVPotX0nmHIKm', '0000-00-00 00:00:00', '2016-03-18 08:25:34', NULL, 0),
+(31, 'sm the grass residences unit 1717b tower 1, quezon city, philippines', 'joshua', '', '', 'rivera', '09175829479', '', 'abrenicamarkjoshua@gmail.com', '$2y$10$gCzyEp/96K3IIwf0Cu0nxuiWc1hJqk1dwoYeFZdZJmEwYvj1LIP3.', 'LSGeyFFwSokoGFwocbuyajFVcrh4bNsviFZmdEby29GYYJL9c04kNXSrAsWG', '2016-03-18 14:54:54', '2016-03-18 15:43:19', 'cfe7ehKtpa38Blnb3ukVPAPe88Ak8M', 1),
+(32, '#44 Espiritu St. Marulas Val. City', 'ldaisuke', '', '', 'remillo', '09051127633', '', 'jomarielabios@gmail.com', '$2y$10$x50TTCUsdQsh.o9i6sop4.gg3VnUXw6iwB/Tpk2urK3bMGjpqJqvO', 'QO16P6fJ8zyxhCDmdIGMmSSoTToGy9Rnhfjk356bi7PDYyGzVbhActH7dq0W', '2016-03-18 15:42:46', '2016-03-18 16:06:12', 'wjglOs3s6BIcaZUvCnlksIeInZGrnc', 1);
 
 -- --------------------------------------------------------
 
@@ -292,110 +353,34 @@ INSERT INTO `users` (`id`, `customer_address`, `name`, `lastname`, `firstname`, 
 -- Table structure for table `usersession`
 --
 
-CREATE TABLE `usersession` (
+CREATE TABLE IF NOT EXISTS `usersession` (
   `id` varchar(255) NOT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
+-- Constraints for dumped tables
 --
 
 --
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `inventory`
---
-ALTER TABLE `inventory`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `orders`
+-- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`purchaseorders_id`) REFERENCES `purchaseorders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`),
-  ADD KEY `password_resets_token_index` (`token`);
-
---
--- Indexes for table `productpictures`
+-- Constraints for table `productpictures`
 --
 ALTER TABLE `productpictures`
-  ADD PRIMARY KEY (`id`);
+  ADD CONSTRAINT `productpictures_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `purchaseorders`
+-- Constraints for table `purchaseorders`
 --
 ALTER TABLE `purchaseorders`
-  ADD PRIMARY KEY (`id`);
+  ADD CONSTRAINT `purchaseorders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
-
---
--- Indexes for table `usersession`
---
-ALTER TABLE `usersession`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `inventory`
---
-ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
---
--- AUTO_INCREMENT for table `productpictures`
---
-ALTER TABLE `productpictures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
---
--- AUTO_INCREMENT for table `purchaseorders`
---
-ALTER TABLE `purchaseorders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
