@@ -15,6 +15,7 @@ use App\purchaseorder;
 use DateTime;
 use App\configStrategy;
 use App\User;
+use App\audittrail;
 class HomeController extends Controller{
 	public function postDeleteClosedAndCancelledOrders(){
 		$orders = purchaseorder::where('status', 'cancelled')->orWhere('status', 'closed')->delete();
@@ -28,7 +29,7 @@ class HomeController extends Controller{
 	}
 	public function getIndex(){
 		
-		$purchaseordersPendingDelivery = purchaseorder::where('status', 'pending')->orWhere('status','delivery')->get();
+		$purchaseordersPendingDelivery = purchaseorder::where('status', 'pending')->orWhere('status','on-delivery-process')->get();
 		$purchaseordersClosed_cancelled =purchaseorder::where('status', 'closed')->orWhere('status','cancelled')->get();
 
 		$data['orders_pending_delivery'] = $purchaseordersPendingDelivery;
@@ -43,7 +44,7 @@ if(Auth::user()->userType != "Admin"){
 	public function getOnDelivery(){
 
 		
-		$purchaseorderDelivery = purchaseorder::where('status','delivery')->get();
+		$purchaseorderDelivery = purchaseorder::where('status','on-delivery-process')->get();
 		
 		$data['orders_delivery'] = $purchaseorderDelivery;
 		
@@ -277,6 +278,21 @@ if(Auth::user()->userType != "Admin"){
 		$purchaseorder->status = $request->newstatus;
 		$purchaseorder->remarks = $request->remarks;
 		$purchaseorder->save();
+
+		$trail = new audittrail();
+		if($purchaseorder->status != $request->newstatus){
+			$trail->trail = "Admin updated order status to : " . $request->newstatus;
+		}
+		$trail->purchaseorder_id = $purchaseorder->id;
+		if(!empty($request->remarks)){
+			if($purchaseorder->remarks != $request->remarks)
+			$trail->trail .= " remarked: '" . $request->remarks . "'";
+		}
+		if($purchaseorder->status != $request->newstatus || $purchaseorder->remarks != $request->remarks ){
+			$trail->save();
+
+		}
+
 		return redirect('/order/' . $request->purchaseorders_id)->with('affirm', 'Status updated successfully');
 		}
 		if(isset($_POST['saveCustomerDetails'])){
@@ -353,6 +369,7 @@ if($purchaseorder->status == "pending" || $purchaseorder->status == "on-delivery
 		}
 }
 		$data['deadlineColor'] = $deadlineColor;
+		$data['audittrails'] = audittrail::where('purchaseorder_id', $purchaseorder->id)->get();
 		return view('orderdetails', $data);
 	}
 	public function getPending(){

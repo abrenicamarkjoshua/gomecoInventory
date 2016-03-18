@@ -177,5 +177,23 @@
 	     </div>
 	</fieldset>
 	@endif
+	<fieldset>
+		<legend>Audit trail</legend>
+		<table  class="pure-table pure-table-striped" style = "margin-bottom:15px;">
+		<thead>
+			<th>Date & time</th>
+			<th>Log</th>
+			
+		</thead>
+		@foreach($audittrails as $audittrail)
+			<tr>
+				<td>{{$audittrail->created_at}}</td>
+				<td>{{$audittrail->trail}}</td>
+			</tr>
+		@endforeach
+		</table>
+
+		
+	</fieldset>
 
 @stop
