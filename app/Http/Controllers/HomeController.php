@@ -275,33 +275,68 @@ if(Auth::user()->userType != "Admin"){
 		// 	$purchaseorder->status = "closed";
 		// 	$purchaseorder->save();
 		// }
+		
+		$trail = new audittrail();
+		$trailmessage = "";
+		if($purchaseorder->status != $request->newstatus){
+			$trailmessage .= "Admin updated order status to : " . $request->newstatus . ";";
+		}
+		if($purchaseorder->remarks != $request->remarks){
+			$trailmessage .= " remarked: '" . $request->remarks . "'";
+		}
+		if($purchaseorder->status != $request->newstatus || $purchaseorder->remarks != $request->remarks ){
+			$trail->purchaseorder_id = $purchaseorder->id;
+			$trail->trail = $trailmessage;
+			$trail->save();
+
+		}
+		
 		$purchaseorder->status = $request->newstatus;
 		$purchaseorder->remarks = $request->remarks;
 		$purchaseorder->save();
 
-		$trail = new audittrail();
-		if($purchaseorder->status != $request->newstatus){
-			$trail->trail = "Admin updated order status to : " . $request->newstatus;
-		}
-		$trail->purchaseorder_id = $purchaseorder->id;
-		if(!empty($request->remarks)){
-			if($purchaseorder->remarks != $request->remarks)
-			$trail->trail .= " remarked: '" . $request->remarks . "'";
-		}
-		if($purchaseorder->status != $request->newstatus || $purchaseorder->remarks != $request->remarks ){
-			$trail->save();
-
-		}
-
 		return redirect('/order/' . $request->purchaseorders_id)->with('affirm', 'Status updated successfully');
 		}
 		if(isset($_POST['saveCustomerDetails'])){
+			
 			$purchaseorder->customer_name = $request->customer_name;
 			$purchaseorder->customer_mobile = $request->mobilenumber;
 			$purchaseorder->customer_email = $request->email;
 			$purchaseorder->customer_address = $request->address;
 			$purchaseorder->userverified = $request->customerStatus;
 			$purchaseorder->save();
+			if($purchaseorder->customer_name != $request->customer_name ||
+				$purchaseorder->customer_mobile != $request->mobilenumber ||
+				$purchaseorder->customer_email != $request->email ||
+				$purchaseorder->customer_address != $request->address ||
+				$purchaseorder->userverified != $request->customerStatus){
+
+				$trail = new audittrail();
+					if($purchaseorder->customer_name != $request->customer_name){
+						$trail->trail .= " updated customer name to " . $request->customer_name . ";";
+					}
+					if($purchaseorder->customer_mobile != $request->mobilenumber){
+						$trail->trail .= " updated customer number to " . $request->mobilenumber . ";";
+					}
+					if($purchaseorder->customer_email != $request->email ){
+						$trail->trail .= " updated customer email to " . $request->email . ";";
+					}
+					if($purchaseorder->customer_address != $request->address ){
+						$trail->trail .= " updated customer email to " . $request->email . ";";
+					}
+					if($purchaseorder->userverified == "" || $purchaseorder->userverified == "unverified" ){
+						if($purchaseorder->userverified != $request->customerStatus){
+							$trail->trail .= " updated user status to : " . $request->customerStatus;
+						}
+					}else{
+						if($purchaseorder->userverified != $request->customerStatus){
+							$trail->trail .= " updated user status to : " . $request->customerStatus . ";";
+						}
+					}
+
+				$trail->purchaseorder_id = $purchaseorder->id;
+				$trail->save();
+			}
 			return redirect('/order/' . $request->purchaseorders_id)->with('affirm', 'Customer details for this order updated successfully');
 
 		}
