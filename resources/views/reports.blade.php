@@ -2,6 +2,7 @@
 
 @section('content')
 <H1>Reports</H1>
+<a href = "/replenish">Replenish inventory</a>
 <table  class="pure-table">
 	<thead>
 		<th>
@@ -17,17 +18,17 @@
 	<?php
 		$i =0;
 	?>
-@foreach($productInventories as $productInventory)
+@foreach($products as $product)
 <tr <?php $i++; echo ($i % 2 == 0) ? 'class="pure-table-odd"' : ""; ?>>
 	
 	<td>
-		{{$productInventory->id}}
+		{{$product->id}}
 	</td>
 	<td>
-		{{$productInventory->productName}}
+		{{$product->productName}}
 	</td>
 	<td>
-		{{$productInventory->quantity}}
+		{{$product->gettotalQuantity()}}
 	</td>
 </tr>
 @endforeach

@@ -16,7 +16,20 @@ use DateTime;
 use App\configStrategy;
 use App\User;
 use App\audittrail;
+use App\inventorycount;
 class HomeController extends Controller{
+	public function getReplenish(){
+		$data['products'] = products::all();
+		return view('replenish', $data);
+	}
+	public function postReplenish(Request $request){
+		$inventoryCount = new inventorycount();
+		$inventoryCount->type = "replenish";
+		$inventoryCount->product_id = $request->product;
+		$inventoryCount->amount = $request->amount;
+		$inventoryCount->save();
+		return redirect('/replenish')->with('affirm', 'inventory item count updated successfully');
+	}
 	public function postDeleteClosedAndCancelledOrders(){
 		$orders = purchaseorder::where('status', 'cancelled')->orWhere('status', 'closed')->delete();
 
@@ -80,7 +93,7 @@ class HomeController extends Controller{
 		} else{
 			$pictures = new productPictures();
 		}
-		$inventory = inventory::where('product_id', $product->id)->first();
+		
 		$next = (products::where('id','<', $product->id)->get()->first()) ? products::where('id','<', $product->id)->orderBy('id','desc')->first()->id : $product->id . "#";
 
 		$previous = (products::where('id','>', $product->id)->get()->first()) ? products::where('id','>', $product->id)->orderBy('id','asc')->first()->id : $product->id . "#";
@@ -89,7 +102,6 @@ class HomeController extends Controller{
 		$data = [
 		'product' => $product,
 		'productphotos' =>$pictures,
-		'inventory' => $inventory,
 		'next' => $next,
 		'previous' => $previous,
 		'first' => $first,
@@ -114,10 +126,6 @@ class HomeController extends Controller{
 		}
 		if(isset($_POST['save'])){
 			
-			$inventory = inventory::where('product_id', $request->product_id)->get()->first();
-			$inventory->quantity = $request->numberOfStocks;
-			
-			$inventory->save();
 			$product->category_id = $request->category;
 			$product->productName = $request->productName;
 			$product->productDesc = $request->productDesc;
@@ -175,12 +183,14 @@ class HomeController extends Controller{
 			$product->category_id = $request->category;
 			$product->save();
 
-			$inventory = new inventory();
-			$inventory->product_id = $product->id;
-			$inventory->quantity = $request->numberOfStocks;
-			$inventory->save();
 		}
-		return redirect('products/'.$product->id);
+		$inventoryCount = new inventorycount();
+		$inventoryCount->type = "replenish";
+		$inventoryCount->amount = $request->numberOfStocks;
+		$inventoryCount->product_id = $product->id;
+		$inventoryCount->save();
+			
+		return redirect('products/'.$product->id)->with('affirm', 'product "' . $product->productName . '" successfully added');
 	}
 	public function getaddCategory(){
 		return view('addcategory');
@@ -189,7 +199,7 @@ class HomeController extends Controller{
 		return view('categories');
 	}
 	public function getReports(){
-		$data['productInventories'] = DB::table('inventory')->join('products', 'inventory.product_id', '=', 'products.id')->get();
+		$data['products'] =products::all();
 		return view('reports', $data);
 	}
 	public function getUsers(){
@@ -206,7 +216,10 @@ class HomeController extends Controller{
 		$error = "";
 		
 		$user = Auth::user();
-		
+		$existingUser = User::where('name', $request->username);
+		if($existingUser){
+			return redirect('/myaccount')->with('error', 'user name already exist');
+		}
 		if(isset($_POST['save'])){
 			$user->lastname = $request->lastname;
 			$user->name = $request->username;
@@ -305,7 +318,19 @@ class HomeController extends Controller{
 			$trail->save();
 
 		}
-		
+		if($request->newstatus == "closed"){
+			$orders = orders::where('purchaseorders_id',$purchaseorder->id)->get();
+			foreach($orders as $order){
+				$product = products::where('productName', $order->productName)->first();
+				if($product){
+					$inventoryCount = new inventorycount();
+					$inventoryCount->type = "withdraw";
+					$inventoryCount->product_id = $product->id;
+					$inventoryCount->amount = $order->quantity;
+					$inventoryCount->save();
+				}
+			}
+		}
 		$purchaseorder->status = $request->newstatus;
 		$purchaseorder->remarks = $request->remarks;
 		$purchaseorder->save();

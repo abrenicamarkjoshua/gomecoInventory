@@ -1,4 +1,15 @@
 <?php
+Route::post('/replenish', [
+	'uses' => 'HomeController@postReplenish',
+	'middleware' => 'auth'
+
+	]);
+
+Route::get('/replenish', [
+	'uses' => 'HomeController@getReplenish',
+	'middleware' => 'auth'
+
+	]);
 Route::post('/deleteClosedAndCancelledOrders', [
 	'uses' => 'HomeController@postDeleteClosedAndCancelledOrders',
 	'middleware' => 'auth'
