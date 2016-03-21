@@ -75,20 +75,20 @@ timedMsg();
          </ul>
           </a>
         </li>
+         @if(Auth::user()->userType == "Admin")
         <li>
           <a href="#" class="submenu-toggle">
             <i class="glyphicon glyphicon-th-large"></i>
             <span>Product</span>
           </a>
-		<?php //if($user['user_level'] == 1 || $user['user_level'] == 2){ ?>   
+         
           <ul class="nav submenu">
       			<li><a href="/products">Manage Product</a> </li>
-      			<!-- <li><a href="accessories.php">Add Accessories</a> </li> -->
             <li><a href="addproduct">Add Product</a> </li>
 			
          </ul>
-	
         </li>
+         @endif
 		
 		<li>
           <a href="/reports">
@@ -103,9 +103,13 @@ timedMsg();
             <span>User Management</span>
           </a>
           <ul class="nav submenu">
+            @if(Auth::user()->userType == "Admin")
             <li><a href="/users">Manage user</a> </li>
+            @endif
              <li><a href="/myaccount">My account</a> </li>
+             @if(Auth::user()->userType == "Admin")
              <li><a href="/newuser">New User</a> </li>
+             @endif
          </ul>
         </li>
 		
@@ -121,6 +125,11 @@ timedMsg();
 <div class="alert alert-success">
   {{session('affirm')}}
 </div>
+  @endif
+  @if (session('error'))
+      <div class="alert alert-danger">
+          {{ session('error') }}
+      </div>
   @endif
 @yield('content')
 		

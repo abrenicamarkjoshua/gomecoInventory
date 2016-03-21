@@ -23,9 +23,13 @@ class HomeController extends Controller{
 		return redirect('/')->with('affirm', 'Closed and cancelled orders successfully deleted');
 	}
 	public function postDeleteUser($id){
+		
 		$user = User::find($id);
+		if(Auth::user()->id == $user->id){
+			return redirect('/users')-with('error', 'you cannot delete your account while logged in');
+		}
 		$user->forceDelete();
-		return redirect('/users')->with('affirm', 'user delete successfully');
+		return redirect('/users')->with('affirm', 'user deleted successfully');
 	}
 	public function getIndex(){
 		
@@ -34,7 +38,7 @@ class HomeController extends Controller{
 
 		$data['orders_pending_delivery'] = $purchaseordersPendingDelivery;
 		$data['orders_closed_cancelled'] = $purchaseordersClosed_cancelled;
-if(Auth::user()->userType != "Admin"){
+		if(Auth::user()->userType == ""){
 			Auth::logout();
 			return redirect(configStrategy::getGomecoWebsite());
 		}
@@ -189,7 +193,7 @@ if(Auth::user()->userType != "Admin"){
 		return view('reports', $data);
 	}
 	public function getUsers(){
-		$data['users'] = User::where('userType', 'Admin')->get();
+		$data['users'] = User::where('userType', '!=', '')->get();
 		return view('users', $data);
 	}
 	public function getMyAccount(){
@@ -208,7 +212,7 @@ if(Auth::user()->userType != "Admin"){
 			$user->name = $request->username;
 			$user->firstname = $request->firstname;
 			$user->lastname = $request->lastname;
-			$user->middlename = $request->middlename;
+			$user->middleName = $request->middlename;
 			$user->mobileNumber = $request->mobilenumber;
 			$user->email = $request->email;
 			$user->save();
@@ -246,6 +250,17 @@ if(Auth::user()->userType != "Admin"){
 		if($request->password != $request->retypepassword){
 			return redirect("/newuser")->with('error', 'passwords must match');
 		}
+
+		$existingUser = User::where('email', $request->email)->first();
+		if($existingUser){
+			$errorMessage = "";
+			return redirect("/newuser")->with('error', 'Email address already exist in database');
+		}
+		$existingUserByUsername = User::where('name', $request->username)->first();
+		if($existingUserByUsername){
+			$errorMessage = "";
+			return redirect("/newuser")->with('error', 'user name already exist in database');
+		}
 		$user = User::create(
 			[
 			'name' => $request->username,
@@ -253,10 +268,10 @@ if(Auth::user()->userType != "Admin"){
 			'firstname' => $request->firstname,
 			'middleName' => $request->middlename,
 			'mobileNumber' => $request->mobilenumber,
-			'userType' => "Admin",
+			'userType' => "Inventory staff",
 			'email' => $request->email,
-			'password' => bcrypt($request->password)
-
+			'password' => bcrypt($request->password),
+			'active' => 1
 			]
 			);
 		return redirect("/newuser")->with('affirm', 'user successfully added');
@@ -299,12 +314,7 @@ if(Auth::user()->userType != "Admin"){
 		}
 		if(isset($_POST['saveCustomerDetails'])){
 			
-			$purchaseorder->customer_name = $request->customer_name;
-			$purchaseorder->customer_mobile = $request->mobilenumber;
-			$purchaseorder->customer_email = $request->email;
-			$purchaseorder->customer_address = $request->address;
-			$purchaseorder->userverified = $request->customerStatus;
-			$purchaseorder->save();
+			
 			if($purchaseorder->customer_name != $request->customer_name ||
 				$purchaseorder->customer_mobile != $request->mobilenumber ||
 				$purchaseorder->customer_email != $request->email ||
@@ -337,6 +347,12 @@ if(Auth::user()->userType != "Admin"){
 				$trail->purchaseorder_id = $purchaseorder->id;
 				$trail->save();
 			}
+			$purchaseorder->customer_name = $request->customer_name;
+			$purchaseorder->customer_mobile = $request->mobilenumber;
+			$purchaseorder->customer_email = $request->email;
+			$purchaseorder->customer_address = $request->address;
+			$purchaseorder->userverified = $request->customerStatus;
+			$purchaseorder->save();
 			return redirect('/order/' . $request->purchaseorders_id)->with('affirm', 'Customer details for this order updated successfully');
 
 		}

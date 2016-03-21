@@ -15,11 +15,8 @@
         <p style ="color:green">{!! $_SESSION['affirm'] !!}</p>
             <?php unset($_SESSION['affirm']); ?>
         @endif
-        @if(Auth::user()->active == 0)
-            <p style = "color:red;">Please check your email and  validate your account within 24 hours. Order made by invalid users are marked as false orders</p>
-        
-        @endif
-        <legend>Personal information</legend>
+       
+        <legend>User information</legend>
     	
     	<div class="pure-control-group">
             <label for="name">Employee number:</label>
@@ -41,7 +38,7 @@
         </div>
  		<div class="pure-control-group">
             <label for="name">Middle name:</label>
-            <input class = "pure-input-1-3"  name = "middlename" type="text" placeholder="middle name" value = '{{$user->middlename}}'>
+            <input class = "pure-input-1-3"  name = "middlename" type="text" placeholder="middle name" value = '{{$user->middleName}}'>
         </div>
  		<div class="pure-control-group">
             <label for="name">Mobile number:</label>

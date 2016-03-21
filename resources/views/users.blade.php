@@ -18,14 +18,15 @@
 	<tr><td>{{$user->name}}</td>
 		<td>{{$user->lastname}}</td>
 		<td>{{$user->firstname}}</td>
-		<td>{{$user->middlename}}</td>
+		<td>{{$user->middleName}}</td>
 		<td>{{$user->email}}</td>
 		<td>{{$user->mobileNumber}}</td>
 		
 		<td><form action = '../deleteuser/{{$user->id}}' method = 'post'>
 			{!! csrf_field() !!}
+			@if(Auth::user()->id != $user->id)
 			<input type = 'submit' name = 'btnDelete' value = 'Delete'  onclick="return confirm('Are you sure you want to delete this user?');"/>
-
+			@endif
 		</form></td>
 	</tr>
 @endforeach

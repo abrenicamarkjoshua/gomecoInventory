@@ -8,17 +8,7 @@
 	{!! csrf_field() !!}
 	
     <fieldset>
-    	@if (session('affirm'))
-		    <div class="alert alert-success">
-		        {{ session('affirm') }}
-		    </div>
-		@endif	
-        @if (session('error'))
-            <div class="alert alert-error" style = "color:red;">
-                {{ session('error') }}
-            </div>
-        @endif  
-        <legend>Personal information</legend>
+    	<legend>User information</legend>
     	
     	
         <div class="pure-control-group">

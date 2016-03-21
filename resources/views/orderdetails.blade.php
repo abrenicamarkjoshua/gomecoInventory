@@ -73,7 +73,8 @@
 		</form>
 		@else
 		<div class = "pure-form pure-form-aligned">
-		
+			
+			{!! csrf_field() !!}
 			<div class="pure-control-group">
 	            <label for="name">Total:</label>
 	           
@@ -92,7 +93,6 @@
 	            
 	        	</div>
 	        </div>
-			
 		</div>
     	@endif
 
@@ -101,6 +101,8 @@
 	@if($purchaseOrder->status != "cancelled" && $purchaseOrder->status != "closed")
 	<fieldset>
 		<legend>Customer information</legend>
+		<form action = "" method = "post">
+		{!! csrf_field() !!}
 		<div class="pure-form pure-form-aligned">
 			<input type = 'hidden' name = 'purchaseorders_id' value = '{{$purchaseOrder->id}}'/>
 				
@@ -137,12 +139,13 @@
 	        <input type = 'submit' name = 'saveCustomerDetails' value = 'Update Customer details for this order' />
 		
 	        </div>
+	        </form>
 	</fieldset>
 	@else
 <fieldset>
 		<legend>Customer information</legend>
 		<div class="pure-form pure-form-aligned">
-		
+		{!! csrf_field() !!}
 			<input type = 'hidden' name = 'purchaseorders_id' value = '{{$purchaseOrder->id}}'/>
 				
 			<div class="pure-control-group">
@@ -173,7 +176,7 @@
 	            	
 	            </select>
 	        
-	        </div>
+	        </div>   
 	     </div>
 	</fieldset>
 	@endif
