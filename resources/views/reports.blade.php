@@ -2,7 +2,8 @@
 
 @section('content')
 <H1>Reports</H1>
-<a href = "/replenish">Replenish inventory</a>
+<a href = "/replenish" style = "margin-right:10px">Replenish inventory</a>
+<a href = "/adjust" style = "margin-right:10px">Adjust inventory</a>
 <table  class="pure-table">
 	<thead>
 		<th>

@@ -18,6 +18,18 @@ use App\User;
 use App\audittrail;
 use App\inventorycount;
 class HomeController extends Controller{
+	public function getAdjust(){
+		$data['products'] = products::all();
+		return view('adjust', $data);
+	}
+	public function postAdjust(Request $request){
+		$inventoryCount = new inventorycount();
+		$inventoryCount->type = "withdraw";
+		$inventoryCount->product_id = $request->product;
+		$inventoryCount->amount = $request->amount;
+		$inventoryCount->save();
+		return redirect('/adjust')->with('affirm', 'inventory item count updated successfully');
+	}
 	public function getReplenish(){
 		$data['products'] = products::all();
 		return view('replenish', $data);

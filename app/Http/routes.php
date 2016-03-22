@@ -1,4 +1,15 @@
 <?php
+Route::post('/adjust', [
+	'uses' => 'HomeController@postAdjust',
+	'middleware' => 'auth'
+
+	]);
+
+Route::get('/adjust', [
+	'uses' => 'HomeController@getAdjust',
+	'middleware' => 'auth'
+
+	]);
 Route::post('/replenish', [
 	'uses' => 'HomeController@postReplenish',
 	'middleware' => 'auth'
